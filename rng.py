@@ -1,25 +1,25 @@
 #!/usr/bin/env python
 
-from random import random
-from sys    import stdout
-from struct import pack
+import sys
+import os
+import struct
 import signal
+
+stdout = os.fdopen(sys.stdout.fileno(), 'wb', 0)
 
 def main():
 	signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-	try:
-		while True:
-			
-			# REPLACE ME WITH DESIRED RNG
-			uniform_random_double = random()
-			# END REPLACE ME
+	while True:
+		
+		# REPLACE ME WITH DESIRED RNG
+		uniform_random_double = 0.5
+		# END REPLACE ME
 
-			write_double_to_stdout_as_binary(uniform_random_double)
-	except IOError:
-		print('Pipe closed. Who cares.')
+		write_double_to_stdout_as_binary(uniform_random_double)
 
 def write_double_to_stdout_as_binary(double):
-	stdout.buffer.write(pack('d', double))
+	binary = struct.pack('d', double)
+	stdout.write(binary)
 
 if __name__ == '__main__':
 	main()
